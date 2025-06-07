@@ -25,11 +25,8 @@ export default class MyPlugin extends Plugin {
 		this.addCommand({
 			id: 'open-sample-modal',
 			name: 'Open Sample Modal',
-			// callback: () => {
-			// 	console.log('Simple Callback');
-			// },
 			checkCallback: (checking: boolean) => {
-				let leaf = this.app.workspace.activeLeaf;
+				const leaf = this.app.workspace.getActiveViewOfType(require('obsidian').MarkdownView);
 				if (leaf) {
 					if (!checking) {
 						new SampleModal(this.app).open();
@@ -42,9 +39,6 @@ export default class MyPlugin extends Plugin {
 
 		this.addSettingTab(new SampleSettingTab(this.app, this));
 
-		this.registerCodeMirror((cm: CodeMirror.Editor) => {
-			console.log('codemirror', cm);
-		});
 
 		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
 			console.log('click', evt);
